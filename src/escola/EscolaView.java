@@ -15,14 +15,9 @@ public class EscolaView extends JFrame implements ActionListener {
     JPanel mainContentWrapper = new JPanel();
     
     JPanel menuPanel = new JPanel();
-    JButton verNotasBtn = new JButton("Ver notas");
-    JButton addNotasBtn = new JButton("Adicionar nota");
-    JButton addAlunoBtn = new JButton("Adicionar aluno");
-    JButton remAlunoBtn = new JButton("Remover aluno");
-    JButton addCursoBtn = new JButton("Adicionar curso");
-    JButton remCursoBtn = new JButton("Remover curso");
-    JButton addCadeiraBtn = new JButton("Adicionar cadeira");
-    JButton remCadeiraBtn = new JButton("Remover cadeira");
+    JButton verAlunosBtn = new JButton("Alunos");
+    JButton verCadeirasBtn = new JButton("Cadeiras");
+    JButton verCursosBtn = new JButton("Cursos");
     
     EscolaView() {
         
@@ -39,14 +34,9 @@ public class EscolaView extends JFrame implements ActionListener {
 
         menuPanel.setLayout(new GridLayout(8,1));
         
-        menuPanel.add(verNotasBtn);
-        menuPanel.add(addNotasBtn);
-        menuPanel.add(addAlunoBtn);
-        menuPanel.add(remAlunoBtn);
-        menuPanel.add(addCursoBtn);
-        menuPanel.add(remCursoBtn);
-        menuPanel.add(addCadeiraBtn);
-        menuPanel.add(remCadeiraBtn);
+        menuPanel.add(verAlunosBtn);
+        menuPanel.add(verCadeirasBtn);
+        menuPanel.add(verCursosBtn);
         
         mainFrame.add(menuPanel, BorderLayout.WEST);
         
@@ -64,21 +54,64 @@ public class EscolaView extends JFrame implements ActionListener {
 
     
     private void addEventListeners() {
-        ActionListener addAluno = (ActionEvent ae) -> {
-            addAlunoView();
+        ActionListener verAlunos = (ActionEvent ae) -> {
+            verAlunosView();
         };
        
-        ActionListener verNotas = (ActionEvent ae) -> {
-            geralView();
+        ActionListener verCursos = (ActionEvent ae) -> {
+            verCursosView();
         };
         
+        ActionListener verCadeiras = (ActionEvent ae) -> {
+            verCadeirasView();
+        };
         
-        addEvent(addAlunoBtn, addAluno);
-        addEvent(verNotasBtn, verNotas);
+        addEvent(verAlunosBtn, verAlunos);
+        addEvent(verCursosBtn, verCursos);
+        addEvent(verCadeirasBtn, verCadeiras);
+    }
+    
+    public void verCursosView() {
+        JPanel mainContent = new JPanel(new GridLayout(3,1));
+        
+        JPanel principalPanel = new JPanel();
+        
+        JButton addaluno = new JButton("Add Aluno");
+        principalPanel.add (addaluno);
+        addaluno.setBounds(200,100,30,20);
+        
+        JPanel legendasPanel = new JPanel();
+        
+        JLabel cursos = new JLabel("Cursos");
+        legendasPanel.add (cursos);
+        JLabel creditos = new JLabel("Creditos");
+        legendasPanel.add (creditos);
+        JLabel turmas = new JLabel("Turmas");
+        legendasPanel.add (turmas);
+        JLabel alunos = new JLabel("Alunos");
+        legendasPanel.add (alunos);
+        
+        JPanel conteudoPanel = new JPanel();
+        conteudoPanel.setLayout(null);
+        
+        
+        JScrollPane conteudoScroll = new JScrollPane();
+        //conteudoScroll.setBounds(240, 200, 270, 200);
+        conteudoPanel.add(conteudoScroll);
+            
+        mainContent.add(principalPanel);
+        mainContent.add(legendasPanel);
+        mainContent.add(conteudoScroll);
+        
+        mainContent.setBackground(Color.black);
+        render(mainContent);
+    }
+    
+    public void verCadeiras() {
         
     }
     
-    public void geralView() {
+    public void verAlunosView() {
         JPanel mainContent = new JPanel(new GridLayout(20,1));
         for(int i = 0; i < Escola.alunosLength(); i++) {
             Aluno aluno = Escola.getAluno(i);
@@ -245,7 +278,7 @@ public class EscolaView extends JFrame implements ActionListener {
     
     public void removeAlunoObj(Aluno aluno) {
         Escola.remAluno(aluno);
-        geralView();
+        verAlunosView();
     }
     
     public void resetAlunoInput(JTextField nomeTf, JTextField idadeTf, JTextField emailTf) {
