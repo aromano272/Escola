@@ -101,14 +101,10 @@ public class Escola {
         Escola.addCurso(curso5);
         
         Escola.addCurso(curso5);
-        System.out.println("DEBUG" + Escola.getCurso(0).getNomeCurso());
         
-        System.out.println(CursosList.get(0).getCoordenador());
         
         Cadeira mat = new Cadeira();
         CursosList.get(1).addCadeira(mat);
-        System.out.println(CursosList.get(1).getCadeira(0).getNumero());
-        System.out.println(CursosList.get(1).getCadeira(0));
         
         Aluno aluno1 = new Aluno(curso1, 0, "Andre1");
         Aluno aluno2 = new Aluno(curso2, 0, "Andre2");

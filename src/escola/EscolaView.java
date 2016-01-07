@@ -31,10 +31,11 @@ public class EscolaView extends JFrame implements ActionListener {
         int windowWidth = 800;
         int windowHeight = 600;
         mainFrame.setSize(windowWidth, windowHeight);
-        //this.setResizable(false);
+        mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("App bue fixe");
+        mainFrame.setLayout(new BorderLayout());
 
         menuPanel.setLayout(new GridLayout(8,1));
         
@@ -52,6 +53,8 @@ public class EscolaView extends JFrame implements ActionListener {
         
         
         mainFrame.add(mainContentWrapper, BorderLayout.CENTER);
+        mainContentWrapper.setLayout(new BorderLayout());
+        mainContentWrapper.setBackground(Color.blue);
         
         mainFrame.setVisible(true);
         
@@ -128,7 +131,7 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void verNotasView(Aluno aluno) {
-        JPanel mainContent = new JPanel(new GridLayout(100,1));
+        JPanel mainContent = new JPanel(new GridLayout(10,1));
         /*
         for (Nota nota : aluno.getNotas()) {
             JPanel holder = new JPanel();
@@ -144,31 +147,28 @@ public class EscolaView extends JFrame implements ActionListener {
         for (int i = 0; i < Escola.cadeirasLength(); i++) {
             boolean hasTitulo = false;
             Cadeira cadeira = Escola.getCadeira(i);
+            JPanel cadeiraWrapper = new JPanel();
             
-            for(Nota nota : aluno.getNotas()) {
-                
-                JPanel holder = new JPanel();
-                
+            for(int j = 0; j < aluno.getNotas().size(); j++) {
+                Nota nota = aluno.getNotas().get(j);
                 if(nota.getCadeira() == cadeira) {
                     if(!hasTitulo) {
                         JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
                         JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
-                        holder.add(cadeiraLabel);
-                        holder.add(valorLabel);
+                        cadeiraWrapper.add(cadeiraLabel);
+                        cadeiraWrapper.add(valorLabel);
                         hasTitulo = true;
                     } else {
                         JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
-                        holder.add(valorLabel);
+                        cadeiraWrapper.add(valorLabel);
                     }
-                    
-                    
-                    mainContent.add(holder);
+                }
+                if(j == (aluno.getNotas().size() - 1)) {
+                    mainContent.add(cadeiraWrapper);
                 }
             }
-            
-            
         }
-        
+        mainContent.setBackground(Color.yellow);
         render(mainContent);
     }
     
