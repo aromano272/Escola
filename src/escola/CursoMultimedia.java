@@ -5,11 +5,13 @@
  */
 package escola;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aRomano
  */
-public class CursoMultimedia extends Curso {
+public class CursoMultimedia extends Curso implements Serializable {
     //private static final int creditos = 240;
     private static int totalCursos = 0;
     

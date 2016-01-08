@@ -5,30 +5,29 @@
  */
 package escola;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 
 /**
  *
  * @author aRomano
  */
-public class Escola {
+public class Escola implements Serializable {
 
     /**
      * @param args the command line arguments
      */
-    private static int totalMatriculas = 0;
     
-    public static void novaMatricula() {
-        Escola.totalMatriculas++;
-    }
     
-    public static void removerMatricula() {
-        Escola.totalMatriculas--;
-    }
-    
-    private static final ArrayList<Curso> Cursos = new ArrayList<>();
-    private static final ArrayList<Aluno> Alunos = new ArrayList<>();
-    private static final ArrayList<Cadeira> Cadeiras = new ArrayList<>();
+    private static ArrayList<Curso> Cursos = new ArrayList<>();
+    private static ArrayList<Aluno> Alunos = new ArrayList<>();
+    private static ArrayList<Cadeira> Cadeiras = new ArrayList<>();
     
     public static void addCurso(Curso curso) {
         Cursos.add(curso);
@@ -43,7 +42,11 @@ public class Escola {
     }
     
     public static int cursosLenght() {
-        return Cursos.size();
+        try {
+            return Cursos.size();
+        } catch(Exception ex) {
+            return 0;
+        }        
     }
     
     public static void addAluno(Aluno aluno) {
@@ -59,7 +62,12 @@ public class Escola {
     }
     
     public static int alunosLength() {
-        return Alunos.size();
+        System.out.println(Alunos.size());
+        try {
+            return Alunos.size();
+        } catch(Exception ex) {
+            return 0;
+        }
     }
     
     public static void addCadeira(Cadeira cadeira) {
@@ -75,12 +83,40 @@ public class Escola {
     }
     
     public static int cadeirasLength() {
-        return Cadeiras.size();
+        try {
+            return Cadeiras.size();
+        } catch(Exception ex) {
+            return 0;
+        }
+    }
+    
+    
+    public static void serializeAlunos() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("AlunosList.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(Escola.Alunos);
+            out.flush();
+            out.close();
+            fileOut.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void deserializeAlunos() {
+        try { 
+            FileInputStream fileIn = new FileInputStream("AlunosList.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Escola.Alunos = (ArrayList) in.readObject();
+        } catch (Exception ex) {
+            
+        }
     }
     
     
     Escola() {
-        
+        deserializeAlunos();
     }
     
     public static void main(String[] args) {
@@ -97,7 +133,7 @@ public class Escola {
         Escola.addCurso(curso5);
         
         Cadeira mat = new Cadeira();
-        
+        /*
         Aluno aluno1 = new Aluno(curso1, 0, "Andre1");
         Aluno aluno2 = new Aluno(curso2, 0, "Andre2");
         Aluno aluno3 = new Aluno(curso3, 0, "Andre3");
@@ -112,7 +148,8 @@ public class Escola {
         Escola.addAluno(aluno5);
         Escola.addAluno(aluno6);
         Escola.addAluno(aluno7);
-
+        */
+        
         
         Cadeira cadeira1 = new Cadeira("AED", "John Cena", 3);
         Cadeira cadeira2 = new Cadeira("DDM", "Joana Cena", 6);
@@ -127,7 +164,7 @@ public class Escola {
         Nota nota6 = new Nota(Escola.getCadeira(0), 10f);
         Nota nota7 = new Nota(Escola.getCadeira(0), 10f);
         Nota nota8 = new Nota(Escola.getCadeira(0), 10f);
-        
+        /*
         Escola.getAluno(0).addNota(nota1);
         Escola.getAluno(0).addNota(nota2);
         Escola.getAluno(0).addNota(nota3);
@@ -136,7 +173,8 @@ public class Escola {
         Escola.getAluno(0).addNota(nota6);
         Escola.getAluno(0).addNota(nota7);
         Escola.getAluno(0).addNota(nota8);
-        
+        */
+        Escola escola = new Escola();
         EscolaView mainView = new EscolaView();
         
         

@@ -5,19 +5,21 @@
  */
 package escola;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aRomano
  */
-public class Cadeira {
-    //     Metodos de Objecto
+public class Cadeira implements Serializable {
+    //     Metodos de Class
     private static int totalCadeiras = 0;
     
     public static int getTotalCadeiras() {
         return Cadeira.totalCadeiras;
     }
 
-    //     Metodos de Class
+    //     Metodos de Objecto
     private String nome;
     private final int numero;
     private String professor;

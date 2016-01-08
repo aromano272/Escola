@@ -5,11 +5,13 @@
  */
 package escola;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aRomano
  */
-public class Nota {
+public class Nota implements Serializable {
     
     private final Cadeira cadeira;
     private final float valor;

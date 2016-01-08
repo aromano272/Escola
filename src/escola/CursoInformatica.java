@@ -5,11 +5,13 @@
  */
 package escola;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aRomano
  */
-public class CursoInformatica extends Curso {
+public class CursoInformatica extends Curso implements Serializable {
     // cursos de informatica teem obrigatoriamente 240 creditos
     // 'override' ah variavel creditos
     private static final int creditos = 240;

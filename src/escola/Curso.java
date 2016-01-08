@@ -5,13 +5,14 @@
  */
 package escola;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author aRomano
  */
-abstract public class Curso {
+abstract public class Curso implements Serializable {
     // numero de creditos para conclusao
     // final pois nao tem nenhum metodo set
     private static final int creditos = 180;
