@@ -89,21 +89,14 @@ public class Escola {
         CursoMultimedia curso3 = new CursoMultimedia("Notu3333rno", "Desconh3333ecido", "coorde3333nador@escola.pt");
         CursoInformatica curso4 = new CursoInformatica("Notu4444rno", "Descon4444hecido", "coorden4444ador@escola.pt");
         CursoMultimedia curso5 = new CursoMultimedia("Notur5555no", "Desconh5555ecido", "coorde5555nador@escola.pt");
-        CursosList.add(curso1);
-        CursosList.add(curso2);
-        CursosList.add(curso3);
-        CursosList.add(curso4);
-        CursosList.add(curso5);
+        
         Escola.addCurso(curso1);
         Escola.addCurso(curso2);
         Escola.addCurso(curso3);
         Escola.addCurso(curso4);
         Escola.addCurso(curso5);
         
-        
-        
         Cadeira mat = new Cadeira();
-        CursosList.get(1).addCadeira(mat);
         
         Aluno aluno1 = new Aluno(curso1, 0, "Andre1");
         Aluno aluno2 = new Aluno(curso2, 0, "Andre2");
@@ -151,7 +144,7 @@ public class Escola {
         // talvez "enviar" o object do curso quando instanciamos um alunos
         // envez de se enviar o index do curso
         //mainView.geralView(cursos);
-        mainView.addAlunoView();
+        mainView.verAlunosView();
         
         
     }

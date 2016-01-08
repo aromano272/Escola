@@ -96,7 +96,6 @@ public class EscolaView extends JFrame implements ActionListener {
         
         
         JScrollPane conteudoScroll = new JScrollPane();
-        //conteudoScroll.setBounds(240, 200, 270, 200);
         conteudoPanel.add(conteudoScroll);
             
         mainContent.add(principalPanel);

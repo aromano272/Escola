@@ -54,45 +54,6 @@ abstract public class Curso {
         return this.emailCoordenador;
     }
     
-    //abstract public void addCadeira(Cadeira cadeira);
-    
-    //abstract public Cadeira getCadeira(int index);
-    
-    private Cadeira[] cadeiras = new Cadeira[20];
-    private int cadeirasLength = 0;
-    public void addCadeira(Cadeira cadeira) {
-        if(cadeirasLength < cadeiras.length) {
-            cadeiras[cadeirasLength] = cadeira;
-            System.out.println("Cadeira adicionado à lista no index " + cadeirasLength);
-            cadeirasLength++;
-        }
-    }
-    
-    public Cadeira getCadeira(int index) {
-        return cadeiras[index];
-    }
-    
-    public int cadeirasLength() {
-        return cadeirasLength;
-    }
-    
-//    private Aluno[] alunos = new Aluno[200];
-//    private int alunosLength = 0;
-//    public void addAluno(Aluno aluno) {
-//        if(alunosLength < alunos.length) {
-//            alunos[alunosLength] = aluno;
-//            System.out.println("Aluno adicionado à lista no index " + alunosLength);
-//            alunosLength++;
-//        }
-//    }
-//    
-//    public Aluno getAluno(int index) {
-//        return alunos[index];
-//    }
-//    
-//    public int alunosLength() {
-//        return alunosLength;
-//    }
     private ArrayList<Aluno> alunos = new ArrayList<>();
     
     public void addAluno(Aluno aluno) {
