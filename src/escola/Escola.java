@@ -100,7 +100,6 @@ public class Escola {
         Escola.addCurso(curso4);
         Escola.addCurso(curso5);
         
-        Escola.addCurso(curso5);
         
         
         Cadeira mat = new Cadeira();

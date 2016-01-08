@@ -169,9 +169,8 @@ public final class Aluno {
     
     
     // Construtores
-    Aluno(Curso curso, int cursoIndex, String nome, int idade, String email) {
+    Aluno(Curso curso, String nome, int idade, String email) {
         this.curso = curso;
-        this.cursoIndex = cursoIndex;
         this.nome = nome;
         this.idade = idade;
         this.email = email;

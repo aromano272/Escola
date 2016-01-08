@@ -114,7 +114,8 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void addCursoView() {
-        JPanel mainContent = new JPanel();
+        JPanel mainContent = new JPanel(new GridLayout(9,1));
+        JPanel btnHolder = new JPanel();
         JButton addBtn = new JButton("Adicionar");
         JButton resBtn = new JButton("Cancelar");
         JLabel coordenadorLabel = new JLabel("Coordenador:");
@@ -142,8 +143,9 @@ public class EscolaView extends JFrame implements ActionListener {
         
         mainContent.add(coordenadorEmailLabel);
         mainContent.add(coordenadorEmailTf);
-        mainContent.add(addBtn);
-        mainContent.add(resBtn);
+        btnHolder.add(addBtn);
+        btnHolder.add(resBtn);
+        mainContent.add(btnHolder);
         
         
         ActionListener addEvt = (ActionEvent evt) -> {
@@ -208,7 +210,8 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void addCadeiraView() {
-        JPanel mainContent = new JPanel();
+        JPanel mainContent = new JPanel(new GridLayout(11,1));
+        JPanel btnHolder = new JPanel();
         JButton addBtn = new JButton("Adicionar");
         JButton resBtn = new JButton("Cancelar");
         JTextField professorTf = new JTextField(10);
@@ -236,8 +239,9 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(professorEmailTf);
         mainContent.add(codigoClassroomLabel);
         mainContent.add(codigoClassroomTf);
-        mainContent.add(addBtn);
-        mainContent.add(resBtn);
+        btnHolder.add(addBtn);
+        btnHolder.add(resBtn);
+        mainContent.add(btnHolder);
         
         
         ActionListener addEvt = (ActionEvent evt) -> {
@@ -284,6 +288,8 @@ public class EscolaView extends JFrame implements ActionListener {
     
     public void verAlunosView() {
         JPanel mainContent = new JPanel(new GridLayout(20,1));
+        JButton addAlunoBtn = new JButton("Adicionar aluno");
+        mainContent.add(addAlunoBtn);
         for(int i = 0; i < Escola.alunosLength(); i++) {
             Aluno aluno = Escola.getAluno(i);
             JPanel holder = new JPanel();
@@ -311,6 +317,7 @@ public class EscolaView extends JFrame implements ActionListener {
             //removerAluno.putClientProperty("numeroAluno", aluno.getNumero());
 
             mainContent.add(holder);
+            
 
             ActionListener removeBtnEvt = (ActionEvent evt) -> {
                 //Object source = ae.getSource();
@@ -330,6 +337,12 @@ public class EscolaView extends JFrame implements ActionListener {
             addEvent(verNotas, verNotasABtnEvt);
         }
         
+        ActionListener addBtnEvt = (ActionEvent evt) -> {
+            addAlunoView();
+        };
+        
+        addEvent(addAlunoBtn, addBtnEvt);
+        
         mainContent.setBackground(Color.yellow);
         render(mainContent);
     }
@@ -338,7 +351,15 @@ public class EscolaView extends JFrame implements ActionListener {
     
     public void addAlunoView() {
         
-        JPanel mainContent = new JPanel(new GridLayout(10,1));
+        JPanel mainContent = new JPanel(new GridLayout(9,1));
+        
+        JLabel cursoComboLabel = new JLabel("Curso:");
+        JComboBox<String> cursoCombo = new JComboBox<>();
+        
+        // talvez dar sort aos cursos por tipo de curso
+        for(int i = 0; i < Escola.cursosLenght(); i++) {
+            cursoCombo.addItem(Escola.getCurso(i).getNomeCurso());
+        }
         
         JLabel nomeLabel = new JLabel("Nome:");
         JTextField nomeTf = new JTextField(15);
@@ -350,6 +371,8 @@ public class EscolaView extends JFrame implements ActionListener {
         JButton addBtn = new JButton("Confirmar");
         JButton resBtn = new JButton("Cancelar");
         
+        mainContent.add(cursoComboLabel);
+        mainContent.add(cursoCombo);
         mainContent.add(nomeLabel);
         mainContent.add(nomeTf);
         mainContent.add(idadeLabel);
@@ -362,10 +385,10 @@ public class EscolaView extends JFrame implements ActionListener {
         
         
         ActionListener addBtnEvt = (ActionEvent evt) -> {
-            addAlunoObj(nomeTf, idadeTf, emailTf);
+            addAlunoObj(cursoCombo, nomeTf, idadeTf, emailTf);
         };
         ActionListener resBtnEvt = (ActionEvent evt) -> {
-            resetAlunoInput(nomeTf, idadeTf, emailTf);
+            resetAlunoInput(cursoCombo, nomeTf, idadeTf, emailTf);
         };
         addEvent(addBtn, addBtnEvt);
         addEvent(resBtn, resBtnEvt);
@@ -374,16 +397,18 @@ public class EscolaView extends JFrame implements ActionListener {
         render(mainContent);
     }
     
-    public void addAlunoObj(JTextField nomeTf, JTextField idadeTf, JTextField emailTf) {
+    public void addAlunoObj(JComboBox cursoCombo, JTextField nomeTf, JTextField idadeTf, JTextField emailTf) {
         try {
             String nome = nomeTf.getText();
             int idade = Integer.parseInt(idadeTf.getText());
             String email = emailTf.getText();
             // como ir buscar o indice à combobox, talvez ir buscar o obj directamente
-            int cursoIndex = 0;
-            Curso curso = Escola.getCurso(0);
+//            int cursoIndex = 0;
+//            Curso curso = Escola.getCurso(0);
+            Curso curso = Escola.getCurso(cursoCombo.getSelectedIndex());
             
-            Aluno aluno = new Aluno(curso, cursoIndex, nome, idade, email);
+            Aluno aluno = new Aluno(curso, nome, idade, email);
+                    //new Aluno(curso, cursoIndex, nome, idade, email);
             
             // adicionar a um curso especifico
             Escola.addAluno(aluno);
@@ -393,9 +418,8 @@ public class EscolaView extends JFrame implements ActionListener {
 //            JOptionPane.showMessageDialog(mainFrame, "Erro");
             ex.printStackTrace();
         } finally {
-            resetAlunoInput(nomeTf, idadeTf, emailTf);
+            resetAlunoInput(cursoCombo, nomeTf, idadeTf, emailTf);
         }
-        
     }
     
     public void removeAlunoObj(Aluno aluno) {
@@ -403,8 +427,9 @@ public class EscolaView extends JFrame implements ActionListener {
         verAlunosView();
     }
     
-    public void resetAlunoInput(JTextField nomeTf, JTextField idadeTf, JTextField emailTf) {
+    public void resetAlunoInput(JComboBox cursoCombo, JTextField nomeTf, JTextField idadeTf, JTextField emailTf) {
         clearInput(nomeTf, idadeTf, emailTf);
+        cursoCombo.setSelectedIndex(0);
     }
     
     public void verNotasView(Aluno aluno) {
@@ -461,9 +486,15 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void addNotaView(Aluno aluno) {
-        JPanel mainContent = new JPanel();
+        JPanel mainContent = new JPanel(new GridLayout(5,1));
+        JPanel btnHolder = new JPanel();
         JLabel cadeiraComboLabel = new JLabel("Cadeira:");
         JComboBox cadeiraCombo = new JComboBox();
+        
+        for(int i = 0; i < Escola.cadeirasLength(); i++) {
+            cadeiraCombo.addItem(Escola.getCadeira(i).getNome());
+        }
+        
         JLabel valorLabel = new JLabel("Valor:");
         JTextField valorTf = new JTextField(10);
         JButton addBtn = new JButton("Adicionar");
@@ -473,8 +504,9 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(cadeiraCombo);
         mainContent.add(valorLabel);
         mainContent.add(valorTf);
-        mainContent.add(addBtn);
-        mainContent.add(resBtn);
+        btnHolder.add(addBtn);
+        btnHolder.add(resBtn);
+        mainContent.add(btnHolder);
         
         ActionListener addBtnEvt = (ActionEvent evt) -> {
             addNotaObj(aluno, cadeiraCombo, valorTf);
@@ -489,7 +521,16 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void addNotaObj(Aluno aluno, JComboBox cadeiraCombo, JTextField valorTf) {
-        
+        try {
+            Cadeira cadeira = Escola.getCadeira(cadeiraCombo.getSelectedIndex());
+            float valor = Float.parseFloat(valorTf.getText());
+            Nota nota = new Nota(cadeira, valor);
+            aluno.addNota(nota);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            resetNotaInput(cadeiraCombo, valorTf);
+        }
     }
     
     public void resetNotaInput(JComboBox cadeiraCombo, JTextField valorTf) {
