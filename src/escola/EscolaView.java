@@ -122,9 +122,13 @@ public class EscolaView extends JFrame implements ActionListener {
         JLabel coordenadorEmailLabel = new JLabel("Email do Coordenador:");
         JTextField coordenadorEmailTf = new JTextField(10);
         JLabel cursoComboLabel = new JLabel("Tipo de curso:");
-        JComboBox cursoCombo = new JComboBox();
+        JComboBox<String> cursoCombo = new JComboBox<>();
+        cursoCombo.addItem("Informática");
+        cursoCombo.addItem("Multimédia");
         JLabel horarioComboLabel = new JLabel("Horario:");
-        JComboBox horarioCombo = new JComboBox();
+        JComboBox<String> horarioCombo = new JComboBox<>();
+        horarioCombo.addItem("Diurno");
+        horarioCombo.addItem("Pós-Laboral");
         
         
         mainContent.add(cursoComboLabel);
@@ -157,18 +161,23 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void addCursoObj(JComboBox cursoCombo, JComboBox horarioCombo, JTextField coordenadorTf, JTextField emailCoordenadorTf) {
-        
-        String curso = cursoCombo.getSelectedItem().toString();
-        String horario = horarioCombo.getSelectedItem().toString();
-        String coordenador = coordenadorTf.getText();
-        String emailCoordenador = emailCoordenadorTf.getText();
-        
-        if(curso.equals("Multimédia")) {
-            Curso cursoObj = new CursoMultimedia(horario, coordenador, emailCoordenador);
-            CursosList.add(cursoObj);
-        } else {
-            Curso cursoObj = new CursoInformatica(horario, coordenador, emailCoordenador);
-            CursosList.add(cursoObj);
+        try {
+            String curso = cursoCombo.getSelectedItem().toString();
+            String horario = horarioCombo.getSelectedItem().toString();
+            String coordenador = coordenadorTf.getText();
+            String emailCoordenador = emailCoordenadorTf.getText();
+            
+            if(curso.equals("Informática")) {
+                Curso cursoObj = new CursoInformatica(horario, coordenador, emailCoordenador);
+                Escola.addCurso(cursoObj);
+            } else {
+                Curso cursoObj = new CursoMultimedia(horario, coordenador, emailCoordenador);
+                Escola.addCurso(cursoObj);
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            resetCursoInput(cursoCombo, horarioCombo, coordenadorTf, emailCoordenadorTf);
         }
     }
     
@@ -206,7 +215,10 @@ public class EscolaView extends JFrame implements ActionListener {
         JTextField professorEmailTf = new JTextField(10);
         JTextField nomeTf = new JTextField(10);
         JTextField codigoClassroomTf = new JTextField(10);
-        JComboBox creditosCombo = new JComboBox();
+        JComboBox<Integer> creditosCombo = new JComboBox<>();
+        creditosCombo.addItem(3);
+        creditosCombo.addItem(6);
+        creditosCombo.addItem(9);
         JLabel nomeLabel = new JLabel("Nome da cadeira:");
         JLabel creditosComboLabel = new JLabel("Creditos:");
         JLabel professorLabel = new JLabel("Nome do professor:");
@@ -247,17 +259,16 @@ public class EscolaView extends JFrame implements ActionListener {
             String professor = professorTf.getText();
             String emailProfessor = emailProfessorTf.getText();
             String codigoClassroom = codigoClassroomTf.getText();
-            //int creditos = Integer.parseInt(creditosTf.getText());
+            int creditos = (int)creditosCombo.getSelectedItem();
             
             Cadeira cadeira = new Cadeira(nome, professor, emailProfessor, codigoClassroom, creditos);
-            // adicionar a um curso especifico
-            CursosList.get(1).addCadeira(cadeira);
+            
+            Escola.addCadeira(cadeira);
         } catch(Exception ex) {
 //            JOptionPane.showMessageDialog(mainFrame, "Erro");
             ex.printStackTrace();
         } finally {
-            clearInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf);
-            creditosCombo.setSelectedIndex(0);
+            resetCadeiraInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf, creditosCombo);
         }
     }
     
@@ -382,7 +393,7 @@ public class EscolaView extends JFrame implements ActionListener {
 //            JOptionPane.showMessageDialog(mainFrame, "Erro");
             ex.printStackTrace();
         } finally {
-            clearInput(nomeTf, idadeTf, emailTf);
+            resetAlunoInput(nomeTf, idadeTf, emailTf);
         }
         
     }
