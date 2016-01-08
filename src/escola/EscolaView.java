@@ -76,9 +76,9 @@ public class EscolaView extends JFrame implements ActionListener {
         
         JPanel principalPanel = new JPanel();
         
-        JButton addaluno = new JButton("Add Aluno");
-        principalPanel.add (addaluno);
-        addaluno.setBounds(200,100,30,20);
+        JButton addCursoBtn = new JButton("Add Curso");
+        principalPanel.add (addCursoBtn);
+        
         
         JPanel legendasPanel = new JPanel();
         
@@ -103,12 +103,172 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(legendasPanel);
         mainContent.add(conteudoScroll);
         
+        ActionListener addCursoEvt = (ActionEvent ae) -> {
+            addCursoView();
+        };
+        
+        addEvent(addCursoBtn, addCursoEvt);
+        
         mainContent.setBackground(Color.black);
         render(mainContent);
     }
     
-    public void verCadeiras() {
+    public void addCursoView() {
+        JPanel mainContent = new JPanel();
+        JButton addBtn = new JButton("Adicionar");
+        JButton resBtn = new JButton("Cancelar");
+        JLabel coordenadorLabel = new JLabel("Coordenador:");
+        JTextField coordenadorTf = new JTextField(10);
+        JLabel coordenadorEmailLabel = new JLabel("Email do Coordenador:");
+        JTextField coordenadorEmailTf = new JTextField(10);
+        JLabel cursoComboLabel = new JLabel("Tipo de curso:");
+        JComboBox cursoCombo = new JComboBox();
+        JLabel horarioComboLabel = new JLabel("Horario:");
+        JComboBox horarioCombo = new JComboBox();
         
+        
+        mainContent.add(cursoComboLabel);
+        mainContent.add(cursoCombo);
+        
+        mainContent.add(horarioComboLabel);
+        mainContent.add(horarioCombo);
+        
+        mainContent.add(coordenadorLabel);
+        mainContent.add(coordenadorTf);
+        
+        mainContent.add(coordenadorEmailLabel);
+        mainContent.add(coordenadorEmailTf);
+        mainContent.add(addBtn);
+        mainContent.add(resBtn);
+        
+        
+        ActionListener addEvt = (ActionEvent ae) -> {
+            addCursoObj(cursoCombo, horarioCombo, coordenadorTf, coordenadorEmailTf);
+        };
+        
+        ActionListener resEvt = (ActionEvent ae) -> {
+            resetCursoInput(cursoCombo, horarioCombo, coordenadorTf, coordenadorEmailTf);
+        };
+        
+        addEvent(addBtn, addEvt);
+        addEvent(resBtn, resEvt);
+        
+        render(mainContent);
+    }
+    
+    public void addCursoObj(JComboBox cursoCombo, JComboBox horarioCombo, JTextField coordenadorTf, JTextField emailCoordenadorTf) {
+        
+        String curso = cursoCombo.getSelectedItem().toString();
+        String horario = horarioCombo.getSelectedItem().toString();
+        String coordenador = coordenadorTf.getText();
+        String emailCoordenador = emailCoordenadorTf.getText();
+        
+        if(curso.equals("Multimédia")) {
+            Curso cursoObj = new CursoMultimedia(horario, coordenador, emailCoordenador);
+            CursosList.add(cursoObj);
+        } else {
+            Curso cursoObj = new CursoInformatica(horario, coordenador, emailCoordenador);
+            CursosList.add(cursoObj);
+        }
+    }
+    
+    public void resetCursoInput(JComboBox cursoCombo, JComboBox horarioCombo, JTextField coordenadorTf, JTextField emailCoordenadorTf) {
+        clearInput(coordenadorTf, emailCoordenadorTf);
+        cursoCombo.setSelectedIndex(0);
+        horarioCombo.setSelectedIndex(0);
+    }
+    
+    public void removeCursoObj(Curso curso) {
+        Escola.remCurso(curso);
+        verCursosView();
+    }
+    
+    public void verCadeirasView() {
+        JPanel mainContent = new JPanel();
+        
+        JButton addCadeiraBtn = new JButton("Adicionar Cadeira");
+        
+        ActionListener addCadeiraEvt = (ActionEvent ae) -> {
+            addCadeiraView();
+        };
+        
+        mainContent.add(addCadeiraBtn);
+        
+        addEvent(addCadeiraBtn, addCadeiraEvt);
+        render(mainContent);
+    }
+    
+    public void addCadeiraView() {
+        JPanel mainContent = new JPanel();
+        JButton addBtn = new JButton("Adicionar");
+        JButton resBtn = new JButton("Cancelar");
+        JTextField professorTf = new JTextField(10);
+        JTextField professorEmailTf = new JTextField(10);
+        JTextField nomeTf = new JTextField(10);
+        JTextField codigoClassroomTf = new JTextField(10);
+        JComboBox creditosCombo = new JComboBox();
+        JLabel nomeLabel = new JLabel("Nome da cadeira:");
+        JLabel creditosComboLabel = new JLabel("Creditos:");
+        JLabel professorLabel = new JLabel("Nome do professor:");
+        JLabel professorEmailLabel = new JLabel("Email do professor:");
+        JLabel codigoClassroomLabel = new JLabel("Codigo da Classroom:");
+        
+        
+        mainContent.add(nomeLabel);
+        mainContent.add(nomeTf);
+        mainContent.add(creditosComboLabel);
+        mainContent.add(creditosCombo);
+        mainContent.add(professorLabel);
+        mainContent.add(professorTf);
+        mainContent.add(professorEmailLabel);
+        mainContent.add(professorEmailTf);
+        mainContent.add(codigoClassroomLabel);
+        mainContent.add(codigoClassroomTf);
+        mainContent.add(addBtn);
+        mainContent.add(resBtn);
+        
+        
+        ActionListener addEvt = (ActionEvent ae) -> {
+            addCadeiraObj(nomeTf, professorTf, professorEmailTf, codigoClassroomTf, creditosCombo);
+        };
+        
+        ActionListener resEvt = (ActionEvent ae) -> {
+            resetCadeiraInput(nomeTf, professorTf, professorEmailTf, codigoClassroomTf, creditosCombo);
+        };
+        
+        addEvent(addBtn, addEvt);
+        addEvent(resBtn, resEvt);
+        render(mainContent);
+    }
+    
+    public void addCadeiraObj(JTextField nomeTf, JTextField professorTf, JTextField emailProfessorTf, JTextField codigoClassroomTf, JComboBox creditosCombo) {
+        try {
+            String nome = nomeTf.getText();
+            String professor = professorTf.getText();
+            String emailProfessor = emailProfessorTf.getText();
+            String codigoClassroom = codigoClassroomTf.getText();
+            //int creditos = Integer.parseInt(creditosTf.getText());
+            
+            Cadeira cadeira = new Cadeira(nome, professor, emailProfessor, codigoClassroom, creditos);
+            // adicionar a um curso especifico
+            CursosList.get(1).addCadeira(cadeira);
+        } catch(Exception ex) {
+//            JOptionPane.showMessageDialog(mainFrame, "Erro");
+            ex.printStackTrace();
+        } finally {
+            clearInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf);
+            creditosCombo.setSelectedIndex(0);
+        }
+    }
+    
+    public void resetCadeiraInput(JTextField nomeTf, JTextField professorTf, JTextField emailProfessorTf, JTextField codigoClassroomTf, JComboBox creditosCombo) {
+        clearInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf);
+        creditosCombo.setSelectedIndex(0);
+    }
+    
+    public void removeCadeiraObj(Cadeira cadeira) {
+        Escola.remCadeira(cadeira);
+        verCadeirasView();
     }
     
     public void verAlunosView() {
@@ -163,47 +323,6 @@ public class EscolaView extends JFrame implements ActionListener {
         render(mainContent);
     }
     
-    public void verNotasView(Aluno aluno) {
-        JPanel mainContent = new JPanel(new GridLayout(10,1));
-        /*
-        for (Nota nota : aluno.getNotas()) {
-            JPanel holder = new JPanel();
-            
-            JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
-            JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
-            
-            holder.add(cadeiraLabel);
-            holder.add(valorLabel);
-            
-            mainContent.add(holder);
-        }*/
-        for (int i = 0; i < Escola.cadeirasLength(); i++) {
-            boolean hasTitulo = false;
-            Cadeira cadeira = Escola.getCadeira(i);
-            JPanel cadeiraWrapper = new JPanel();
-            
-            for(int j = 0; j < aluno.getNotas().size(); j++) {
-                Nota nota = aluno.getNotas().get(j);
-                if(nota.getCadeira() == cadeira) {
-                    if(!hasTitulo) {
-                        JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
-                        JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
-                        cadeiraWrapper.add(cadeiraLabel);
-                        cadeiraWrapper.add(valorLabel);
-                        hasTitulo = true;
-                    } else {
-                        JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
-                        cadeiraWrapper.add(valorLabel);
-                    }
-                }
-                if(j == (aluno.getNotas().size() - 1)) {
-                    mainContent.add(cadeiraWrapper);
-                }
-            }
-        }
-        mainContent.setBackground(Color.yellow);
-        render(mainContent);
-    }
     
     
     public void addAlunoView() {
@@ -231,19 +350,11 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(btnHolder);
         
         
-        ActionListener addBtnAE = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                addAlunoObj(nomeTf, idadeTf, emailTf);
-            }
+        ActionListener addBtnAE = (ActionEvent ae) -> {
+            addAlunoObj(nomeTf, idadeTf, emailTf);
         };
-        ActionListener resBtnAE = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                resetAlunoInput(nomeTf, idadeTf, emailTf);
-            }
+        ActionListener resBtnAE = (ActionEvent ae) -> {
+            resetAlunoInput(nomeTf, idadeTf, emailTf);
         };
         addEvent(addBtn, addBtnAE);
         addEvent(resBtn, resBtnAE);
@@ -285,52 +396,51 @@ public class EscolaView extends JFrame implements ActionListener {
         clearInput(nomeTf, idadeTf, emailTf);
     }
     
-    
-    public void addCadeiraObj(JTextField nomeTf, JTextField professorTf, JTextField emailProfessorTf, JTextField codigoClassroomTf, JTextField creditosTf) {
-        try {
-            String nome = nomeTf.getText();
-            String professor = professorTf.getText();
-            String emailProfessor = emailProfessorTf.getText();
-            String codigoClassroom = codigoClassroomTf.getText();
-            int creditos = Integer.parseInt(creditosTf.getText());
+    public void verNotasView(Aluno aluno) {
+        JPanel mainContent = new JPanel(new GridLayout(10,1));
+        /*
+        for (Nota nota : aluno.getNotas()) {
+        JPanel holder = new JPanel();
+        
+        JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
+        JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
+        
+        holder.add(cadeiraLabel);
+        holder.add(valorLabel);
+        
+        mainContent.add(holder);
+        }*/
+        for (int i = 0; i < Escola.cadeirasLength(); i++) {
+            boolean hasTitulo = false;
+            Cadeira cadeira = Escola.getCadeira(i);
+            JPanel cadeiraWrapper = new JPanel();
             
-            Cadeira cadeira = new Cadeira(nome, professor, emailProfessor, codigoClassroom, creditos);
-            // adicionar a um curso especifico
-            CursosList.get(1).addCadeira(cadeira);
-        } catch(Exception ex) {
-//            JOptionPane.showMessageDialog(mainFrame, "Erro");
-            ex.printStackTrace();
-        } finally {
-            clearInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf, creditosTf);
-        }   
-    }
-    
-    public void resetCadeiraInput(JTextField nomeTf, JTextField professorTf, JTextField emailProfessorTf, JTextField codigoClassroomTf, JTextField creditosTf) {
-        clearInput(nomeTf, professorTf, emailProfessorTf, codigoClassroomTf, creditosTf);
-    }
-    
-    public void addCursoObj(JComboBox cursoCombo, JComboBox horarioCombo, JTextField coordenadorTf, JTextField emailCoordenadorTf) {
-        
-        String curso = cursoCombo.getSelectedItem().toString();
-        String horario = horarioCombo.getSelectedItem().toString();
-        String coordenador = coordenadorTf.getText();
-        String emailCoordenador = emailCoordenadorTf.getText();
-        
-        if(curso.equals("Multimédia")) {
-            Curso cursoObj = new CursoMultimedia(horario, coordenador, emailCoordenador);
-            CursosList.add(cursoObj);
-        } else {
-            Curso cursoObj = new CursoInformatica(horario, coordenador, emailCoordenador);
-            CursosList.add(cursoObj);
+            for(int j = 0; j < aluno.getNotas().size(); j++) {
+                Nota nota = aluno.getNotas().get(j);
+                if(nota.getCadeira() == cadeira) {
+                    if(!hasTitulo) {
+                        JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
+                        JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
+                        cadeiraWrapper.add(cadeiraLabel);
+                        cadeiraWrapper.add(valorLabel);
+                        hasTitulo = true;
+                    } else {
+                        JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
+                        cadeiraWrapper.add(valorLabel);
+                    }
+                }
+                if(j == (aluno.getNotas().size() - 1)) {
+                    mainContent.add(cadeiraWrapper);
+                }
+            }
         }
-        
+        mainContent.setBackground(Color.yellow);
+        render(mainContent);
     }
     
-    public void resetCursoInput(JComboBox cursoCombo, JComboBox horarioCombo, JTextField coordenadorTf, JTextField emailCoordenadorTf) {
-        clearInput(coordenadorTf, emailCoordenadorTf);
-        cursoCombo.setSelectedIndex(0);
-        horarioCombo.setSelectedIndex(0);
-    }
+    
+    
+    
     
     
     
