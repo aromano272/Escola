@@ -54,15 +54,15 @@ public class EscolaView extends JFrame implements ActionListener {
 
     
     private void addEventListeners() {
-        ActionListener verAlunos = (ActionEvent ae) -> {
+        ActionListener verAlunos = (ActionEvent evt) -> {
             verAlunosView();
         };
        
-        ActionListener verCursos = (ActionEvent ae) -> {
+        ActionListener verCursos = (ActionEvent evt) -> {
             verCursosView();
         };
         
-        ActionListener verCadeiras = (ActionEvent ae) -> {
+        ActionListener verCadeiras = (ActionEvent evt) -> {
             verCadeirasView();
         };
         
@@ -103,7 +103,7 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(legendasPanel);
         mainContent.add(conteudoScroll);
         
-        ActionListener addCursoEvt = (ActionEvent ae) -> {
+        ActionListener addCursoEvt = (ActionEvent evt) -> {
             addCursoView();
         };
         
@@ -142,11 +142,11 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(resBtn);
         
         
-        ActionListener addEvt = (ActionEvent ae) -> {
+        ActionListener addEvt = (ActionEvent evt) -> {
             addCursoObj(cursoCombo, horarioCombo, coordenadorTf, coordenadorEmailTf);
         };
         
-        ActionListener resEvt = (ActionEvent ae) -> {
+        ActionListener resEvt = (ActionEvent evt) -> {
             resetCursoInput(cursoCombo, horarioCombo, coordenadorTf, coordenadorEmailTf);
         };
         
@@ -188,7 +188,7 @@ public class EscolaView extends JFrame implements ActionListener {
         
         JButton addCadeiraBtn = new JButton("Adicionar Cadeira");
         
-        ActionListener addCadeiraEvt = (ActionEvent ae) -> {
+        ActionListener addCadeiraEvt = (ActionEvent evt) -> {
             addCadeiraView();
         };
         
@@ -228,11 +228,11 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(resBtn);
         
         
-        ActionListener addEvt = (ActionEvent ae) -> {
+        ActionListener addEvt = (ActionEvent evt) -> {
             addCadeiraObj(nomeTf, professorTf, professorEmailTf, codigoClassroomTf, creditosCombo);
         };
         
-        ActionListener resEvt = (ActionEvent ae) -> {
+        ActionListener resEvt = (ActionEvent evt) -> {
             resetCadeiraInput(nomeTf, professorTf, professorEmailTf, codigoClassroomTf, creditosCombo);
         };
         
@@ -301,7 +301,7 @@ public class EscolaView extends JFrame implements ActionListener {
 
             mainContent.add(holder);
 
-            ActionListener removeBtnEvt = (ActionEvent ae) -> {
+            ActionListener removeBtnEvt = (ActionEvent evt) -> {
                 //Object source = ae.getSource();
                 //JButton btn = (JButton)source;
                 // https://www.daniweb.com/programming/software-development/threads/410191/getclientproperty
@@ -311,7 +311,7 @@ public class EscolaView extends JFrame implements ActionListener {
             };
             
             // rename verNotasABtn para verNotasBtn
-            ActionListener verNotasABtnEvt = (ActionEvent ae) -> {
+            ActionListener verNotasABtnEvt = (ActionEvent evt) -> {
                 verNotasView(aluno);
             };
             
@@ -350,14 +350,14 @@ public class EscolaView extends JFrame implements ActionListener {
         mainContent.add(btnHolder);
         
         
-        ActionListener addBtnAE = (ActionEvent ae) -> {
+        ActionListener addBtnEvt = (ActionEvent evt) -> {
             addAlunoObj(nomeTf, idadeTf, emailTf);
         };
-        ActionListener resBtnAE = (ActionEvent ae) -> {
+        ActionListener resBtnEvt = (ActionEvent evt) -> {
             resetAlunoInput(nomeTf, idadeTf, emailTf);
         };
-        addEvent(addBtn, addBtnAE);
-        addEvent(resBtn, resBtnAE);
+        addEvent(addBtn, addBtnEvt);
+        addEvent(resBtn, resBtnEvt);
         
         mainContent.setBackground(Color.yellow);
         render(mainContent);
@@ -398,6 +398,10 @@ public class EscolaView extends JFrame implements ActionListener {
     
     public void verNotasView(Aluno aluno) {
         JPanel mainContent = new JPanel(new GridLayout(10,1));
+        JButton addNotaBtn = new JButton("Adicionar nota");
+        mainContent.add(addNotaBtn);
+        
+        
         /*
         for (Nota nota : aluno.getNotas()) {
         JPanel holder = new JPanel();
@@ -434,14 +438,53 @@ public class EscolaView extends JFrame implements ActionListener {
                 }
             }
         }
+        
+        ActionListener addNotaEvt = (ActionEvent evt) -> {
+            addNotaView(aluno);
+        };
+        
+        addEvent(addNotaBtn, addNotaEvt);
+        
         mainContent.setBackground(Color.yellow);
         render(mainContent);
     }
     
+    public void addNotaView(Aluno aluno) {
+        JPanel mainContent = new JPanel();
+        JLabel cadeiraComboLabel = new JLabel("Cadeira:");
+        JComboBox cadeiraCombo = new JComboBox();
+        JLabel valorLabel = new JLabel("Valor:");
+        JTextField valorTf = new JTextField(10);
+        JButton addBtn = new JButton("Adicionar");
+        JButton resBtn = new JButton("Cancelar");
+        
+        mainContent.add(cadeiraComboLabel);
+        mainContent.add(cadeiraCombo);
+        mainContent.add(valorLabel);
+        mainContent.add(valorTf);
+        mainContent.add(addBtn);
+        mainContent.add(resBtn);
+        
+        ActionListener addBtnEvt = (ActionEvent evt) -> {
+            addNotaObj(aluno, cadeiraCombo, valorTf);
+        };
+        ActionListener resBtnEvt = (ActionEvent evt) -> {
+            resetNotaInput(cadeiraCombo, valorTf);
+        };
+        addEvent(addBtn, addBtnEvt);
+        addEvent(resBtn, resBtnEvt);
+        
+        render(mainContent);
+    }
     
+    public void addNotaObj(Aluno aluno, JComboBox cadeiraCombo, JTextField valorTf) {
+        
+    }
     
-    
-    
+    public void resetNotaInput(JComboBox cadeiraCombo, JTextField valorTf) {
+        clearInput(valorTf);
+        cadeiraCombo.setSelectedIndex(0);
+    }
     
     
     
@@ -498,7 +541,7 @@ public class EscolaView extends JFrame implements ActionListener {
 
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
+    public void actionPerformed(ActionEvent evt) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
