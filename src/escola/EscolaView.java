@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class EscolaView extends JFrame implements ActionListener {
     
@@ -22,7 +23,7 @@ public class EscolaView extends JFrame implements ActionListener {
         
         mainFrame.setLayout(new BorderLayout());
         
-        int windowWidth = 800;
+        int windowWidth = 1000;
         int windowHeight = 600;
         mainFrame.setSize(windowWidth, windowHeight);
         mainFrame.setResizable(false);
@@ -68,12 +69,52 @@ public class EscolaView extends JFrame implements ActionListener {
     
     
     public void verAlunosView() {
-        JPanel mainContent = new JPanel(new GridLayout(20,1));
+        JPanel mainContent = new JPanel(new BorderLayout());
+        JPanel menubarPanel = new JPanel();
+        JPanel legendasPanel = new JPanel(new GridLayout(1,9));
+        JPanel conteudoPanel = new JPanel(new BorderLayout());
+        JPanel header = new JPanel(new GridLayout(2,1));
+        
         JButton addAlunoBtn = new JButton("Adicionar aluno");
-        mainContent.add(addAlunoBtn);
+        menubarPanel.add(addAlunoBtn);
+        
+        JLabel numeroLegLabel = new JLabel("Numero");
+        JLabel nomeLegLabel = new JLabel("Nome");
+        JLabel idadeLegLabel = new JLabel("Idade");
+        JLabel emailLegLabel = new JLabel("Email");
+        JLabel cursoLegLabel = new JLabel("Curso");
+        JLabel mediaLegLabel = new JLabel("Media");
+        legendasPanel.add(numeroLegLabel);
+        legendasPanel.add(nomeLegLabel);
+        legendasPanel.add(idadeLegLabel);
+        legendasPanel.add(emailLegLabel);
+        legendasPanel.add(cursoLegLabel);
+        legendasPanel.add(mediaLegLabel);
+        
+        JLabel spacer1 = new JLabel("");
+        JLabel spacer2 = new JLabel("");
+        JLabel spacer3 = new JLabel("");
+        legendasPanel.add(spacer1);
+        legendasPanel.add(spacer2);
+        legendasPanel.add(spacer3);
+        
+        numeroLegLabel.setBackground(Color.gray);
+        numeroLegLabel.setOpaque(true);
+        nomeLegLabel.setBackground(Color.lightGray);
+        nomeLegLabel.setOpaque(true);
+        idadeLegLabel.setBackground(Color.gray);
+        idadeLegLabel.setOpaque(true);
+        emailLegLabel.setBackground(Color.lightGray);
+        emailLegLabel.setOpaque(true);
+        cursoLegLabel.setBackground(Color.gray);
+        cursoLegLabel.setOpaque(true);
+        mediaLegLabel.setBackground(Color.lightGray);
+        mediaLegLabel.setOpaque(true);
+        
+        
         for(int i = 0; i < Escola.alunosLength(); i++) {
             Aluno aluno = Escola.getAluno(i);
-            JPanel holder = new JPanel();
+            JPanel holder = new JPanel(new GridLayout(1, 9));
             
             JLabel numeroAluno = new JLabel(String.valueOf(aluno.getNumero()));
             JLabel nomeAluno = new JLabel(aluno.getNome());
@@ -85,6 +126,20 @@ public class EscolaView extends JFrame implements ActionListener {
             JButton verNotasBtn = new JButton("Ver notas");
             JButton removerAlunoBtn = new JButton("Remover");
             
+            numeroAluno.setBackground(Color.gray);
+            numeroAluno.setOpaque(true);
+            nomeAluno.setBackground(Color.lightGray);
+            nomeAluno.setOpaque(true);
+            idadeAluno.setBackground(Color.gray);
+            idadeAluno.setOpaque(true);
+            emailAluno.setBackground(Color.lightGray);
+            emailAluno.setOpaque(true);
+            cursoAluno.setBackground(Color.gray);
+            cursoAluno.setOpaque(true);
+            mediaAluno.setBackground(Color.lightGray);
+            mediaAluno.setOpaque(true);
+            holder.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.darkGray));
+            
             holder.add(numeroAluno);
             holder.add(nomeAluno);
             holder.add(idadeAluno);
@@ -94,7 +149,7 @@ public class EscolaView extends JFrame implements ActionListener {
             holder.add(alterarBtn);
             holder.add(verNotasBtn);
             holder.add(removerAlunoBtn);
-            mainContent.add(holder);
+            conteudoPanel.add(holder, BorderLayout.NORTH);
             
             ActionListener alterarBtnEvt = (ActionEvent evt) -> {
                 editAlunoView(aluno);
@@ -119,7 +174,11 @@ public class EscolaView extends JFrame implements ActionListener {
         
         addEvent(addAlunoBtn, addBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
+        header.add(menubarPanel);
+        header.add(legendasPanel);
+        mainContent.add(header, BorderLayout.PAGE_START);
+        mainContent.add(conteudoPanel, BorderLayout.CENTER);
+        
         render(mainContent);
     }
     
@@ -506,7 +565,7 @@ public class EscolaView extends JFrame implements ActionListener {
         } catch(Exception ex) {
             ex.printStackTrace();
         } finally {
-            Escola.editAluno();
+            Escola.editCadeira();
         }
     }
     
@@ -541,8 +600,8 @@ public class EscolaView extends JFrame implements ActionListener {
     public void verCursosView() {
         JPanel mainContent = new JPanel(new BorderLayout());
         JPanel menubarPanel = new JPanel();
-        JPanel legendasPanel = new JPanel();
-        JPanel conteudoPanel = new JPanel();
+        JPanel legendasPanel = new JPanel(new GridLayout(1,6));
+        JPanel conteudoPanel = new JPanel(new BorderLayout());
         JPanel header = new JPanel(new GridLayout(2,1));
         
         JButton addCursoBtn = new JButton("Adicionar curso");
@@ -557,9 +616,24 @@ public class EscolaView extends JFrame implements ActionListener {
         legendasPanel.add(coordenadorLegLabel);
         legendasPanel.add(coordenadorEmailLegLabel);
         
+        JLabel spacer1 = new JLabel("");
+        JLabel spacer2 = new JLabel("");
+        legendasPanel.add(spacer1);
+        legendasPanel.add(spacer2);
+        
+        nomeLegLabel.setBackground(Color.gray);
+        nomeLegLabel.setOpaque(true);
+        horarioLegLabel.setBackground(Color.lightGray);
+        horarioLegLabel.setOpaque(true);
+        coordenadorLegLabel.setBackground(Color.gray);
+        coordenadorLegLabel.setOpaque(true);
+        coordenadorEmailLegLabel.setBackground(Color.lightGray);
+        coordenadorEmailLegLabel.setOpaque(true);
+        
+        
         for(int i = 0; i < Escola.cursosLength(); i++) {
             Curso curso = Escola.getCurso(i);
-            JPanel holder = new JPanel();
+            JPanel holder = new JPanel(new GridLayout(1,6));
             
             JLabel nomeCurso = new JLabel(curso.getNomeCurso());
             JLabel horarioCurso = new JLabel(curso.getRegimeHorario());
@@ -567,6 +641,15 @@ public class EscolaView extends JFrame implements ActionListener {
             JLabel coordenadorEmailCurso = new JLabel(curso.getEmailCoordenador());
             JButton alterarBtn = new JButton("Alterar");
             JButton removerBtn = new JButton("Remover");
+            nomeCurso.setBackground(Color.gray);
+            nomeCurso.setOpaque(true);
+            horarioCurso.setBackground(Color.lightGray);
+            horarioCurso.setOpaque(true);
+            coordenadorCurso.setBackground(Color.gray);
+            coordenadorCurso.setOpaque(true);
+            coordenadorEmailCurso.setBackground(Color.lightGray);
+            coordenadorEmailCurso.setOpaque(true);
+            holder.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.darkGray));
             
             holder.add(nomeCurso);
             holder.add(horarioCurso);
@@ -574,7 +657,7 @@ public class EscolaView extends JFrame implements ActionListener {
             holder.add(coordenadorEmailCurso);
             holder.add(alterarBtn);
             holder.add(removerBtn);
-            conteudoPanel.add(holder);
+            conteudoPanel.add(holder, BorderLayout.NORTH);
             
             ActionListener alterarBtnEvt = (ActionEvent evt) -> {
                 editCursoView(curso);
@@ -730,7 +813,7 @@ public class EscolaView extends JFrame implements ActionListener {
         } catch(Exception ex) {
             ex.printStackTrace();
         } finally {
-            verCursosView();
+            Escola.editCurso();
         }
     }
     
