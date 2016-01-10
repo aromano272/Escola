@@ -31,14 +31,20 @@ public class Escola implements Serializable {
     
     public static void addCurso(Curso curso) {
         Cursos.add(curso);
+        serializeCursos();
     }
     
     public static Curso getCurso(int index) {
         return Cursos.get(index);
     }
     
+    public static void editCurso() {
+        serializeCursos();
+    }
+    
     public static void remCurso(Curso curso) {
         Cursos.remove(curso);
+        serializeCursos();
     }
     
     public static int cursosLenght() {
@@ -51,18 +57,23 @@ public class Escola implements Serializable {
     
     public static void addAluno(Aluno aluno) {
         Alunos.add(aluno);
+        serializeAlunos();
     }
     
     public static Aluno getAluno(int index) {
         return Alunos.get(index);
     }
     
+    public static void editAluno() {
+        serializeAlunos();
+    }
+    
     public static void remAluno(Aluno aluno) {
         Alunos.remove(aluno);
+        serializeAlunos();
     }
     
     public static int alunosLength() {
-        System.out.println(Alunos.size());
         try {
             return Alunos.size();
         } catch(Exception ex) {
@@ -72,14 +83,20 @@ public class Escola implements Serializable {
     
     public static void addCadeira(Cadeira cadeira) {
         Cadeiras.add(cadeira);
+        serializeCadeiras();
     }
     
     public static Cadeira getCadeira(int index) {
         return Cadeiras.get(index);
     }
     
+    public static void editCadeira() {
+        serializeCadeiras();
+    }
+    
     public static void remCadeira(Cadeira cadeira) {
         Cadeiras.remove(cadeira);
+        serializeCadeiras();
     }
     
     public static int cadeirasLength() {
@@ -93,7 +110,7 @@ public class Escola implements Serializable {
     
     public static void serializeAlunos() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("AlunosList.ser");
+            FileOutputStream fileOut = new FileOutputStream("db/AlunosList.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(Escola.Alunos);
             out.flush();
@@ -102,24 +119,76 @@ public class Escola implements Serializable {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+        System.out.println("serialize");
+    }
+    
+    public static void serializeCadeiras() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("db/CadeirasList.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(Escola.Cadeiras);
+            out.flush();
+            out.close();
+            fileOut.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("serialize");
+    }
+    
+    public static void serializeCursos() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("db/CursosLenght.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(Escola.Cursos);
+            out.flush();
+            out.close();
+            fileOut.close();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("serialize");
     }
     
     public static void deserializeAlunos() {
-        try { 
-            FileInputStream fileIn = new FileInputStream("AlunosList.ser");
+        try {
+            FileInputStream fileIn = new FileInputStream("db/AlunosList.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Escola.Alunos = (ArrayList) in.readObject();
         } catch (Exception ex) {
-            
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void deserializeCadeiras() {
+        try {
+            FileInputStream fileIn = new FileInputStream("db/CadeirasList.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Escola.Cadeiras = (ArrayList) in.readObject();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void deserializeCursos() {
+        try {
+            FileInputStream fileIn = new FileInputStream("db/CursosList.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Escola.Cursos = (ArrayList) in.readObject();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     
     
     Escola() {
+        deserializeCursos();
+        deserializeCadeiras();
         deserializeAlunos();
     }
     
     public static void main(String[] args) {
+        /*
         CursoInformatica curso1 = new CursoInformatica("Noturno", "Desconhecido", "coordenador@escola.pt");
         CursoInformatica curso2 = new CursoInformatica("2222", "Desconh2222ecido", "coorden2222ador@escola.pt");
         CursoMultimedia curso3 = new CursoMultimedia("Notu3333rno", "Desconh3333ecido", "coorde3333nador@escola.pt");
@@ -148,7 +217,7 @@ public class Escola implements Serializable {
         Escola.addAluno(aluno5);
         Escola.addAluno(aluno6);
         Escola.addAluno(aluno7);
-        */
+        
         
         
         Cadeira cadeira1 = new Cadeira("AED", "John Cena", 3);
@@ -178,10 +247,6 @@ public class Escola implements Serializable {
         EscolaView mainView = new EscolaView();
         
         
-        
-        // talvez "enviar" o object do curso quando instanciamos um alunos
-        // envez de se enviar o index do curso
-        //mainView.geralView(cursos);
         mainView.verAlunosView();
         
         
