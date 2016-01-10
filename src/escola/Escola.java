@@ -47,7 +47,7 @@ public class Escola implements Serializable {
         serializeCursos();
     }
     
-    public static int cursosLenght() {
+    public static int cursosLength() {
         try {
             return Cursos.size();
         } catch(Exception ex) {
@@ -138,7 +138,7 @@ public class Escola implements Serializable {
     
     public static void serializeCursos() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("db/CursosLenght.ser");
+            FileOutputStream fileOut = new FileOutputStream("db/CursosList.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(Escola.Cursos);
             out.flush();

@@ -25,7 +25,7 @@ public class Cadeira implements Serializable {
     private String professor;
     private String emailProfessor;
     private String codigoClassroom;
-    private final int creditos;
+    private int creditos;
     
     
     
@@ -63,6 +63,10 @@ public class Cadeira implements Serializable {
     
     public String getCodigoClassrrom() {
         return this.codigoClassroom;
+    }
+    
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
     }
     
     public int getCreditos() {
