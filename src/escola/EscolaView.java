@@ -6,14 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 public class EscolaView extends JFrame implements ActionListener {
-    
-    
     JFrame mainFrame = new JFrame("Escola");
     JPanel mainContentWrapper = new JPanel();
-    
     JPanel menuPanel = new JPanel();
     JButton verAlunosBtn = new JButton("Alunos");
     JButton verCadeirasBtn = new JButton("Cadeiras");
@@ -31,19 +27,16 @@ public class EscolaView extends JFrame implements ActionListener {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("Gestor de Escola");
         mainFrame.setLayout(new BorderLayout());
-
         menuPanel.setLayout(new GridLayout(3,1));
         
         menuPanel.add(verAlunosBtn);
         menuPanel.add(verCadeirasBtn);
         menuPanel.add(verCursosBtn);
-        
         mainFrame.add(menuPanel, BorderLayout.WEST);
         
         mainFrame.add(mainContentWrapper, BorderLayout.CENTER);
         mainContentWrapper.setLayout(new BorderLayout());
         mainContentWrapper.setBackground(Color.blue);
-        
         mainFrame.setVisible(true);
         
         addMenuEventListeners();
@@ -53,11 +46,9 @@ public class EscolaView extends JFrame implements ActionListener {
         ActionListener verAlunos = (ActionEvent evt) -> {
             verAlunosView();
         };
-       
         ActionListener verCursos = (ActionEvent evt) -> {
             verCursosView();
         };
-        
         ActionListener verCadeiras = (ActionEvent evt) -> {
             verCadeirasView();
         };
@@ -271,7 +262,6 @@ public class EscolaView extends JFrame implements ActionListener {
         
         ActionListener editBtnEvt = (ActionEvent evt) -> {
             editAlunoObj(aluno, cursoCombo, nomeTf, idadeTf, emailTf);
-            verAlunosView();
         };
         ActionListener resBtnEvt = (ActionEvent evt) -> {
             verAlunosView();
@@ -296,10 +286,10 @@ public class EscolaView extends JFrame implements ActionListener {
             aluno.setIdade(idade);
             aluno.setEmail(email);
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
-            resetAlunoInput(cursoCombo, nomeTf, idadeTf, emailTf);
             Escola.editAluno();
+            verAlunosView();
         }
     }
     
@@ -318,7 +308,7 @@ public class EscolaView extends JFrame implements ActionListener {
             // colocar mais excepcoes
         } catch(Exception ex) {
 //            JOptionPane.showMessageDialog(mainFrame, "Erro");
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
             resetAlunoInput(cursoCombo, nomeTf, idadeTf, emailTf);
         }
@@ -346,7 +336,7 @@ public class EscolaView extends JFrame implements ActionListener {
             
             for(int j = 0; j < aluno.getNotas().size(); j++) {
                 Nota nota = aluno.getNotas().get(j);
-                if(nota.getCadeira().equals(cadeira)) {
+                if(nota.getCadeira().getNome().equals(cadeira.getNome())) {
                     if(!hasTitulo) {
                         JLabel cadeiraLabel = new JLabel(nota.getCadeira().getNome());
                         JLabel valorLabel = new JLabel(String.valueOf(nota.getValor()));
@@ -401,7 +391,7 @@ public class EscolaView extends JFrame implements ActionListener {
             addNotaObj(aluno, cadeiraCombo, valorTf);
         };
         ActionListener resBtnEvt = (ActionEvent evt) -> {
-            resetNotaInput(cadeiraCombo, valorTf);
+            verNotasView(aluno);
         };
         addEvent(addBtn, addBtnEvt);
         addEvent(resBtn, resBtnEvt);
@@ -416,10 +406,10 @@ public class EscolaView extends JFrame implements ActionListener {
             Nota nota = new Nota(cadeira, valor);
             aluno.addNota(nota);
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
-            resetNotaInput(cadeiraCombo, valorTf);
             Escola.editAluno();
+            verNotasView(aluno);
         }
     }
     
@@ -429,17 +419,98 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void verCadeirasView() {
-        JPanel mainContent = new JPanel();
+        JPanel mainContent = new JPanel(new BorderLayout());
+        JPanel menubarPanel = new JPanel();
+        JPanel legendasPanel = new JPanel(new GridLayout(1,7));
+        JPanel conteudoPanel = new JPanel(new BorderLayout());
+        JPanel header = new JPanel(new GridLayout(2,1));
         
-        JButton addCadeiraBtn = new JButton("Adicionar Cadeira");
+        JButton addCadeiraBtn = new JButton("Adicionar cadeira");
+        menubarPanel.add(addCadeiraBtn);
         
-        ActionListener addCadeiraEvt = (ActionEvent evt) -> {
+        JLabel nomeLegLabel = new JLabel("Nome");
+        JLabel creditosLegLabel = new JLabel("Creditos");
+        JLabel professorLegLabel = new JLabel("Professor");
+        JLabel professorEmailLegLabel = new JLabel("Email professor");
+        JLabel codigoClassroomLegLabel = new JLabel("Codigo Classroom");
+        legendasPanel.add(nomeLegLabel);
+        legendasPanel.add(creditosLegLabel);
+        legendasPanel.add(professorLegLabel);
+        legendasPanel.add(professorEmailLegLabel);
+        legendasPanel.add(codigoClassroomLegLabel);
+        
+        JLabel spacer1 = new JLabel("");
+        JLabel spacer2 = new JLabel("");
+        legendasPanel.add(spacer1);
+        legendasPanel.add(spacer2);
+        
+        nomeLegLabel.setBackground(Color.gray);
+        nomeLegLabel.setOpaque(true);
+        creditosLegLabel.setBackground(Color.lightGray);
+        creditosLegLabel.setOpaque(true);
+        professorLegLabel.setBackground(Color.gray);
+        professorLegLabel.setOpaque(true);
+        professorEmailLegLabel.setBackground(Color.lightGray);
+        professorEmailLegLabel.setOpaque(true);
+        codigoClassroomLegLabel.setBackground(Color.gray);
+        codigoClassroomLegLabel.setOpaque(true);
+        
+        for(int i = 0; i < Escola.cadeirasLength(); i++) {
+            Cadeira cadeira = Escola.getCadeira(i);
+            JPanel holder = new JPanel(new GridLayout(1,7));
+            
+            JLabel nomeCadeira = new JLabel(cadeira.getNome());
+            JLabel creditosCadeira = new JLabel(String.valueOf(cadeira.getCreditos()));
+            JLabel professorCadeira = new JLabel(cadeira.getProfessor());
+            JLabel professorEmailCadeira = new JLabel(cadeira.getEmailProfessor());
+            JLabel codigoClassroomCadeira = new JLabel(cadeira.getCodigoClassrrom());
+            JButton alterarBtn = new JButton("Alterar");
+            JButton removerBtn = new JButton("Remover");
+            nomeCadeira.setBackground(Color.gray);
+            nomeCadeira.setOpaque(true);
+            creditosCadeira.setBackground(Color.lightGray);
+            creditosCadeira.setOpaque(true);
+            professorCadeira.setBackground(Color.gray);
+            professorCadeira.setOpaque(true);
+            professorEmailCadeira.setBackground(Color.lightGray);
+            professorEmailCadeira.setOpaque(true);
+            codigoClassroomCadeira.setBackground(Color.gray);
+            codigoClassroomCadeira.setOpaque(true);
+            holder.setBorder(BorderFactory.createMatteBorder(1,0,0,0,Color.darkGray));
+            
+            holder.add(nomeCadeira);
+            holder.add(creditosCadeira);
+            holder.add(professorCadeira);
+            holder.add(professorEmailCadeira);
+            holder.add(codigoClassroomCadeira);
+            holder.add(alterarBtn);
+            holder.add(removerBtn);
+            conteudoPanel.add(holder, BorderLayout.NORTH);
+            
+            ActionListener alterarBtnEvt = (ActionEvent evt) -> {
+                editCadeiraView(cadeira);
+            };
+            ActionListener removeBtnEvt = (ActionEvent evt) -> {
+                removeCadeiraObj(cadeira);
+            };
+            
+            addEvent(alterarBtn, alterarBtnEvt);
+            addEvent(removerBtn, removeBtnEvt);
+        }
+        
+        ActionListener addBtnEvt = (ActionEvent evt) -> {
             addCadeiraView();
         };
         
-        mainContent.add(addCadeiraBtn);
+        addEvent(addCadeiraBtn, addBtnEvt);
         
-        addEvent(addCadeiraBtn, addCadeiraEvt);
+        mainContent.setBackground(Color.yellow);
+        
+        
+        header.add(menubarPanel);
+        header.add(legendasPanel);
+        mainContent.add(header, BorderLayout.PAGE_START);
+        mainContent.add(conteudoPanel, BorderLayout.CENTER);
         render(mainContent);
     }
     
@@ -490,7 +561,7 @@ public class EscolaView extends JFrame implements ActionListener {
     }
     
     public void editCadeiraView(Cadeira cadeira) {
-        JPanel mainContent = new JPanel(new GridLayout(9,1));
+        JPanel mainContent = new JPanel(new GridLayout(11,1));
         
         JPanel btnHolder = new JPanel();
         JButton editBtn = new JButton("Actualizar");
@@ -556,16 +627,31 @@ public class EscolaView extends JFrame implements ActionListener {
             String professor = professorTf.getText();
             String professorEmail = professorEmailTf.getText();
             String codigoClassroom = codigoClassroomTf.getText();
+            String oldCadeiraNome = cadeira.getNome();
             
             cadeira.setNome(nome);
             cadeira.setProfessor(professor);
             cadeira.setEmailProfessor(professorEmail);
             cadeira.setCodigoClassroom(codigoClassroom);
             cadeira.setCreditos(creditos);
+            /*                              NOT WORKING
+            // no caso de algum aluno ter notas desta cadeira, eh necessario altera las para a nova cadeira
+            // para cada aluno..
+            for(int i = 0; i < Escola.alunosLength(); i++) {
+                // para cada nota..
+                for (Nota nota : Escola.getAluno(i).getNotas()) {
+                    // que tenha a mesma cadeira antiga
+                    if(nota.getCadeira().getNome().equals(oldCadeiraNome)) {
+                        nota.setCadeira(cadeira);
+                    }
+                }
+            }*/
+            
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
             Escola.editCadeira();
+            verCadeirasView();
         }
     }
     
@@ -581,7 +667,7 @@ public class EscolaView extends JFrame implements ActionListener {
             
             Escola.addCadeira(cadeira);
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
             verCadeirasView();
         }
@@ -811,9 +897,10 @@ public class EscolaView extends JFrame implements ActionListener {
                 curso.setRegimeHorario(horario);
             }
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
             Escola.editCurso();
+            verCursosView();
         }
     }
     
@@ -832,7 +919,7 @@ public class EscolaView extends JFrame implements ActionListener {
                 Escola.addCurso(cursoObj);
             }
         } catch(Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
             verCursosView();
         }

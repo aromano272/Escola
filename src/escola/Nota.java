@@ -13,11 +13,15 @@ import java.io.Serializable;
  */
 public class Nota implements Serializable {
     
-    private final Cadeira cadeira;
+    private Cadeira cadeira;
     private final float valor;
     
     public float getValor() {
         return this.valor;
+    }
+    
+    public void setCadeira(Cadeira cadeira) {
+        this.cadeira = cadeira;
     }
     
     public Cadeira getCadeira() {
