@@ -51,9 +51,6 @@ public class CursoInformatica extends Curso implements Serializable {
         return this.turma;
     }
     
-    //          TESTE
-    
-    
     
     CursoInformatica(String horario, String coordenador, String emailCoordenador) {
         CursoInformatica.totalCursos++;

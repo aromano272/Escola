@@ -12,7 +12,6 @@ import java.io.Serializable;
  * @author aRomano
  */
 public class CursoMultimedia extends Curso implements Serializable {
-    //private static final int creditos = 240;
     private static int totalCursos = 0;
     
     private static final String nomeCurso = "Multimédia ";
@@ -37,12 +36,6 @@ public class CursoMultimedia extends Curso implements Serializable {
     public char getTurma() {
         return this.turma;
     }
-    
-    // nao eh necessario @Override pois nao eh possivel fazer override a metodos estaticos
-    // na realidade ao darmos o mesmo nome do metodo da superclass, estamos a "esconde lo"
-    // se mudar o scope de "CursoInformatico.getCreditos()" para "Curso.getCreditos()" acedo ao metodo da superclass
-    
-    
     
     CursoMultimedia(String horario, String coordenador, String emailCoordenador) {
         CursoMultimedia.totalCursos++;

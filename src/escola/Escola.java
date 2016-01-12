@@ -188,68 +188,10 @@ public class Escola implements Serializable {
     }
     
     public static void main(String[] args) {
-        /*
-        CursoInformatica curso1 = new CursoInformatica("Noturno", "Desconhecido", "coordenador@escola.pt");
-        CursoInformatica curso2 = new CursoInformatica("2222", "Desconh2222ecido", "coorden2222ador@escola.pt");
-        CursoMultimedia curso3 = new CursoMultimedia("Notu3333rno", "Desconh3333ecido", "coorde3333nador@escola.pt");
-        CursoInformatica curso4 = new CursoInformatica("Notu4444rno", "Descon4444hecido", "coorden4444ador@escola.pt");
-        CursoMultimedia curso5 = new CursoMultimedia("Notur5555no", "Desconh5555ecido", "coorde5555nador@escola.pt");
-        
-        Escola.addCurso(curso1);
-        Escola.addCurso(curso2);
-        Escola.addCurso(curso3);
-        Escola.addCurso(curso4);
-        Escola.addCurso(curso5);
-        
-        Cadeira mat = new Cadeira();
-        /*
-        Aluno aluno1 = new Aluno(curso1, 0, "Andre1");
-        Aluno aluno2 = new Aluno(curso2, 0, "Andre2");
-        Aluno aluno3 = new Aluno(curso3, 0, "Andre3");
-        Aluno aluno4 = new Aluno(curso4, 0, "Andre4");
-        Aluno aluno5 = new Aluno(curso5, 0, "Andre5");
-        Aluno aluno6 = new Aluno(curso2, 0, "Andre6");
-        Aluno aluno7 = new Aluno(curso4, 0, "Ruben");
-        Escola.addAluno(aluno1);
-        Escola.addAluno(aluno2);
-        Escola.addAluno(aluno3);
-        Escola.addAluno(aluno4);
-        Escola.addAluno(aluno5);
-        Escola.addAluno(aluno6);
-        Escola.addAluno(aluno7);
-        
-        
-        
-        Cadeira cadeira1 = new Cadeira("AED", "John Cena", 3);
-        Cadeira cadeira2 = new Cadeira("DDM", "Joana Cena", 6);
-        Escola.addCadeira(cadeira1);
-        Escola.addCadeira(cadeira2);
-        
-        Nota nota1 = new Nota(Escola.getCadeira(1), 10f);
-        Nota nota2 = new Nota(Escola.getCadeira(1), 10f);
-        Nota nota3 = new Nota(Escola.getCadeira(1), 10f);
-        Nota nota4 = new Nota(Escola.getCadeira(1), 10f);
-        Nota nota5 = new Nota(Escola.getCadeira(0), 10f);
-        Nota nota6 = new Nota(Escola.getCadeira(0), 10f);
-        Nota nota7 = new Nota(Escola.getCadeira(0), 10f);
-        Nota nota8 = new Nota(Escola.getCadeira(0), 10f);
-        /*
-        Escola.getAluno(0).addNota(nota1);
-        Escola.getAluno(0).addNota(nota2);
-        Escola.getAluno(0).addNota(nota3);
-        Escola.getAluno(0).addNota(nota4);
-        Escola.getAluno(0).addNota(nota5);
-        Escola.getAluno(0).addNota(nota6);
-        Escola.getAluno(0).addNota(nota7);
-        Escola.getAluno(0).addNota(nota8);
-        */
         Escola escola = new Escola();
         EscolaView mainView = new EscolaView();
         
-        
         mainView.verAlunosView();
-        
-        
     }
     
 }

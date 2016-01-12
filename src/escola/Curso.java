@@ -54,7 +54,7 @@ abstract public class Curso implements Serializable {
     public String getEmailCoordenador() {
         return this.emailCoordenador;
     }
-    
+    /*
     private ArrayList<Aluno> alunos = new ArrayList<>();
     
     public void addAluno(Aluno aluno) {
@@ -72,5 +72,5 @@ abstract public class Curso implements Serializable {
     public int alunosLength() {
         return alunos.size();
     }
-    
+    */
 }

@@ -76,7 +76,6 @@ public final class Aluno implements Serializable {
         return this.email;
     }
     
-    
     public float getMedia() {
         float media = 0;
         for(Nota nota : this.Notas) {
@@ -87,48 +86,6 @@ public final class Aluno implements Serializable {
         
         return media;
     }
-    
-    // retorna media total do aluno
-    /*
-    public float getMedia() {
-        int totalNotas = 0;
-        float media = 0;
-        // para cada linha do array...
-        for(int i = 0; i < this.notas.length; i++) {
-            // .. que tenha a primeira coluna com um valor diferente de 0, ie. que tem notas..
-            if(this.notas[i][0] != 0f) {
-                // .. para cada nota nessa linha ..
-                for(int j = 1; j <= (int)this.notas[i][0]; j++) {
-                    // .. soma ah media e aumenta o totalNotas
-                    media += this.notas[i][j];
-                    totalNotas++;
-                }
-            }
-        }
-        media /= totalNotas;
-        
-        return media;
-    }
-    // retorna media de uma disciplina especifica
-    public float getMedia(int disciplina) {
-        int totalNotas = 0;
-        float media = 0;
-        
-        // se o aluno tiver notas a esta disciplina
-        if(this.notas[disciplina][0] != 0f) {
-            // .. para cada nota nessa linha ..
-            for(int i = 1; i <= (int)this.notas[disciplina][0]; i++) {
-                // .. soma ah media e aumenta o totalNotas
-                media += this.notas[disciplina][i];
-                totalNotas++;
-            }
-        }
-        
-        media /= totalNotas;
-
-        return media;
-    }
-    */
     
     
     // Construtores
