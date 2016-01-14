@@ -19,6 +19,8 @@ abstract public class Curso implements Serializable {
     
 
     // regime diurno ou pos laboral
+    // sao protected para puder referencia-las nos construtores das sub classes
+    // de outro modo teria que dar override ou referencia las atraves de getters/setters
     protected String regimeHorario = "Diurno";
     protected String coordenador;
     protected String emailCoordenador;
@@ -54,23 +56,5 @@ abstract public class Curso implements Serializable {
     public String getEmailCoordenador() {
         return this.emailCoordenador;
     }
-    /*
-    private ArrayList<Aluno> alunos = new ArrayList<>();
     
-    public void addAluno(Aluno aluno) {
-        alunos.add(aluno);
-    }
-    
-    public void remAluno(int index) {
-        alunos.remove(index);
-    }
-    
-    public Aluno getAluno(int index) {
-        return alunos.get(index);
-    }
-    
-    public int alunosLength() {
-        return alunos.size();
-    }
-    */
 }

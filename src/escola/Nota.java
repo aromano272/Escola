@@ -13,17 +13,18 @@ import java.io.Serializable;
  */
 public class Nota implements Serializable {
     
-    private Cadeira cadeira;
+    private final Cadeira cadeira;
     private final float valor;
     
     public float getValor() {
         return this.valor;
     }
-    
+    /*          NOT WORKING
+            metodo utilizado para redefi
     public void setCadeira(Cadeira cadeira) {
         this.cadeira = cadeira;
     }
-    
+    */
     public Cadeira getCadeira() {
         return this.cadeira;
     }

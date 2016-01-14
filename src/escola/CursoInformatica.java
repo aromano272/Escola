@@ -37,8 +37,6 @@ public class CursoInformatica extends Curso implements Serializable {
         return nome;
     }
     
-    
-    //
     private final char turma;
     
     public final char setTurma(int totalCursos) {

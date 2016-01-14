@@ -23,8 +23,6 @@ public class Escola implements Serializable {
     /**
      * @param args the command line arguments
      */
-    
-    
     private static ArrayList<Curso> Cursos = new ArrayList<>();
     private static ArrayList<Aluno> Alunos = new ArrayList<>();
     private static ArrayList<Cadeira> Cadeiras = new ArrayList<>();

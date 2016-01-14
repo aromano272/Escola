@@ -22,6 +22,7 @@ public final class Aluno implements Serializable {
     private Curso curso;
     private final ArrayList<Nota> Notas = new ArrayList<>();
     
+    
     public int getNumeroAlunos() {
         int num = Escola.alunosLength();
         return num;
