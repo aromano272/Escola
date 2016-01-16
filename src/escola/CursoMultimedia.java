@@ -27,6 +27,9 @@ public class CursoMultimedia extends Curso implements Serializable {
         return nome;
     }
     
+    // gera um caracter que comeca no A, e percorre a tabela ascii
+    // este caracter eh gerado para cada isntancia deste curso, e serve como
+    // identificador da turma
     public final char setTurma(int totalCursos) {
         char letra = (char)(totalCursos + 64);
         return letra;

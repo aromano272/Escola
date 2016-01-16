@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class CursoInformatica extends Curso implements Serializable {
     // cursos de informatica teem obrigatoriamente 240 creditos
-    // 'override' ah variavel creditos
+    // "esconde-se" a variavel creditos neste contexto
     private static final int creditos = 240;
     private static int totalCursos = 0;
     

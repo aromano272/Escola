@@ -19,12 +19,7 @@ public class Nota implements Serializable {
     public float getValor() {
         return this.valor;
     }
-    /*          NOT WORKING
-            metodo utilizado para redefi
-    public void setCadeira(Cadeira cadeira) {
-        this.cadeira = cadeira;
-    }
-    */
+    
     public Cadeira getCadeira() {
         return this.cadeira;
     }

@@ -190,6 +190,7 @@ public class Escola implements Serializable {
         EscolaView mainView = new EscolaView();
         
         mainView.verAlunosView();
+        
     }
     
 }

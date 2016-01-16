@@ -8,12 +8,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class EscolaView extends JFrame implements ActionListener {
-    JFrame mainFrame = new JFrame("Escola");
-    JPanel mainContentWrapper = new JPanel();
-    JPanel menuPanel = new JPanel();
-    JButton verAlunosBtn = new JButton("Alunos");
-    JButton verCadeirasBtn = new JButton("Cadeiras");
-    JButton verCursosBtn = new JButton("Cursos");
+    private final JFrame mainFrame = new JFrame("Escola");
+    private final JPanel mainContentWrapper = new JPanel();
+    private final JPanel menuPanel = new JPanel();
+    private final JButton verAlunosBtn = new JButton("Alunos");
+    private final JButton verCadeirasBtn = new JButton("Cadeiras");
+    private final JButton verCursosBtn = new JButton("Cursos");
     
     EscolaView() {
         
@@ -27,7 +27,7 @@ public class EscolaView extends JFrame implements ActionListener {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setTitle("Gestor de Escola");
         mainFrame.setLayout(new BorderLayout());
-        menuPanel.setLayout(new GridLayout(3,1));
+        menuPanel.setLayout(new GridLayout(4,1));
         
         menuPanel.add(verAlunosBtn);
         menuPanel.add(verCadeirasBtn);
@@ -57,7 +57,6 @@ public class EscolaView extends JFrame implements ActionListener {
         addEvent(verCursosBtn, verCursos);
         addEvent(verCadeirasBtn, verCadeiras);
     }
-    
     
     public void verAlunosView() {
         JPanel mainContent = new JPanel(new BorderLayout());
@@ -218,7 +217,7 @@ public class EscolaView extends JFrame implements ActionListener {
         addEvent(addBtn, addBtnEvt);
         addEvent(resBtn, resBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
+        
         render(mainContent);
     }
     
@@ -269,7 +268,7 @@ public class EscolaView extends JFrame implements ActionListener {
         addEvent(editBtn, editBtnEvt);
         addEvent(resBtn, resBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
+        
         render(mainContent);
     }
     
@@ -307,10 +306,9 @@ public class EscolaView extends JFrame implements ActionListener {
             
             // colocar mais excepcoes
         } catch(Exception ex) {
-//            JOptionPane.showMessageDialog(mainFrame, "Erro");
             JOptionPane.showMessageDialog(mainFrame, "Erro");
         } finally {
-            resetAlunoInput(cursoCombo, nomeTf, idadeTf, emailTf);
+            verAlunosView();
         }
     }
     
@@ -360,7 +358,7 @@ public class EscolaView extends JFrame implements ActionListener {
         
         addEvent(addNotaBtn, addNotaEvt);
         
-        mainContent.setBackground(Color.yellow);
+        
         render(mainContent);
     }
     
@@ -504,9 +502,6 @@ public class EscolaView extends JFrame implements ActionListener {
         
         addEvent(addCadeiraBtn, addBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
-        
-        
         header.add(menubarPanel);
         header.add(legendasPanel);
         mainContent.add(header, BorderLayout.PAGE_START);
@@ -616,7 +611,7 @@ public class EscolaView extends JFrame implements ActionListener {
         addEvent(editBtn, editBtnEvt);
         addEvent(resBtn, resBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
+        
         render(mainContent);
     }
     
@@ -762,8 +757,6 @@ public class EscolaView extends JFrame implements ActionListener {
         
         addEvent(addCursoBtn, addBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
-        
         
         header.add(menubarPanel);
         header.add(legendasPanel);
@@ -870,7 +863,7 @@ public class EscolaView extends JFrame implements ActionListener {
         addEvent(editBtn, editBtnEvt);
         addEvent(resBtn, resBtnEvt);
         
-        mainContent.setBackground(Color.yellow);
+        
         render(mainContent);
     }
     
